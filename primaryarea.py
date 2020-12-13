@@ -1,8 +1,20 @@
 from math import floor
 
-class Result:
-    def __init__(self, data):
+class ResultBase:
+    def __init__(self):
         self.votes = dict()
+        self.votes_count = 0
+
+    def get_candidate_fraction(self, candidate_name):
+        if candidate_name not in self.votes:
+            return 0
+
+        candidate_votes = self.votes[candidate_name]
+        return candidate_votes / self.votes_count
+
+class Result(ResultBase):
+    def __init__(self, data):
+        super().__init__()
 
         votes_sum = 0
         fraction_sum = 0
@@ -15,11 +27,10 @@ class Result:
             self.votes_count = votes_sum / fraction_sum
         else:
             self.votes_count = 0
-
-class AggregateResult:
+            
+class AggregateResult(ResultBase):
     def __init__(self, results):
-        self.votes = dict()
-        self.votes_count = 0
+        super().__init__()
 
         for child_dict in results:
             self.votes_count += child_dict.votes_count
@@ -30,18 +41,22 @@ class AggregateResult:
                 
                 self.votes[key] += value
         
-
 class Area:
     def __init__(self, area_facts):
         self.facts = area_facts
+        self.democrat = None
+        self.republican = None
 
     def __repr__(self):
         return self.facts.area_name + " " + self.facts.state_abbreviation
 
+    def is_valid(self):
+        return self.democrat.votes_count != 0 or self.republican.votes_count != 0
+
 class CountyArea(Area):
-    def __init__(self, primary_results, area_facts):
+    def __init__(self, area_facts):
         super().__init__(area_facts)
-        self.results = list(primary_results)
+        primary_results = area_facts.primary_results_collection
 
         republican_results = filter(lambda x:x.party == 'Republican', primary_results)
         democrat_results = filter(lambda x:x.party == 'Democrat', primary_results)
@@ -49,25 +64,18 @@ class CountyArea(Area):
         self.democrat = Result(list(democrat_results))
         self.republican = Result(list(republican_results))
 
-    def get_democrat(self):
-        return self.democrat
-
-    def get_republican(self):
-        return self.republican
-
-
 class AggregateArea(Area):
     def __init__(self, child_areas, area_facts):
         super().__init__(area_facts)
         self.child_areas = child_areas
 
-    def get_democrat(self):
-        democrat_dicts = map(lambda x: x.get_democrat(), self.child_areas)
-        return AggregateResult(list(democrat_dicts))
+        democrat_dicts = map(lambda x: x.democrat, self.child_areas)
+        republican_dicts = map(lambda x: x.republican, self.child_areas)
 
-    def get_republican(self):
-        republican_dicts = map(lambda x: x.get_republican(), self.child_areas)
-        return AggregateResult(list(republican_dicts))
+        self.democrat = AggregateResult(list(democrat_dicts))
+        self.republican = AggregateResult(list(republican_dicts))
+
+
 
 
 
