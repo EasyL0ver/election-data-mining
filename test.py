@@ -1,14 +1,10 @@
 from dbload import load_counties, load_states, start_session
 from primaryarea import CountyArea
-from factsvector import *
+import numpy as np
 
 session = start_session("sqlite:///database.sqlite")
 #data_counties = load_counties(session, filter_empty=True)
 data_states = load_states(session)
-state = data_states[0]
+states_mat = np.array(list(map(lambda x:x.get_vector().numerical(), data_states)))
 
-
-fac = FactsVectorFactory()
-
-vector = fac.get_complete_vector(state)
 print(data_states)

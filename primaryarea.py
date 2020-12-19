@@ -1,5 +1,6 @@
 from math import floor
 import re
+from factsvector import *
 
 
 
@@ -49,6 +50,10 @@ class Area:
         self.facts = area_facts
         self.democrat = None
         self.republican = None
+
+    def get_vector(self):
+        fac = FactsVectorFactory()
+        return fac.get_complete_vector(self)
 
     def __repr__(self):
         return self.facts.area_name + " " + self.facts.state_abbreviation

@@ -61,6 +61,9 @@ class FactsVector:
     def __init__(self, facts):
         self.facts = facts
 
+    def numerical(self):
+        return list(map(lambda x:x.fact_value, self.facts))
+
 class FactsVectorFactory:
     democrat_candidates = ['Hillary Clinton', 'Bernie Sanders']
     republican_candidates = ['Ben Carson', 'Donald Trump', 'Marco Rubio', 'Ted Cruz', 'John Kasich']
