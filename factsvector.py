@@ -58,8 +58,8 @@ class Fact:
         self.fact_value = fact_value
 
 class FactsVector:
-    def __init__(self):
-        self.facts = []
+    def __init__(self, facts):
+        self.facts = facts
 
 class FactsVectorFactory:
     democrat_candidates = ['Hillary Clinton', 'Bernie Sanders']
@@ -112,10 +112,19 @@ class FactsVectorFactory:
 
         return vector
 
-    def get_base_vector(self, area):
-        democrat_votes = list(map(lambda x:area.democrat.get_candidate_fraction(x), FactsVectorFactory.democrat_candidates))
-        republican_votes = list(map(lambda x:area.republican.get_candidate_fraction(x), FactsVectorFactory.republican_candidates))
+    def get_votes_vector(self, area):
+        vector = []
+        for democratCandidate in FactsVectorFactory.democrat_candidates:
+            fact = Fact(democratCandidate + " factor", area.democrat.get_candidate_fraction(democratCandidate))
+            vector.append(fact)
+        for republicanCandidate in FactsVectorFactory.republican_candidates:
+            fact = Fact(republicanCandidate + " factor", area.republican.get_candidate_fraction(republicanCandidate))
+            vector.append(fact)
 
-        return democrat_votes + republican_votes + area.get_facts_vector()
+        return vector
+
+    def get_complete_vector(self, area):
+        return FactsVector(self.get_votes_vector(area) + self.get_facts_vector(area))
+        
 
 

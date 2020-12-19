@@ -10,6 +10,5 @@ state = data_states[0]
 
 fac = FactsVectorFactory()
 
-vector = fac.get_facts_vector(state)
-
+vector = fac.get_complete_vector(state)
 print(data_states)
