@@ -1,4 +1,7 @@
 from math import floor
+import re
+
+
 
 class ResultBase:
     def __init__(self):
@@ -10,7 +13,7 @@ class ResultBase:
             return 0
 
         candidate_votes = self.votes[candidate_name]
-        return candidate_votes / self.votes_count
+        return float(candidate_votes / self.votes_count)
 
 class Result(ResultBase):
     def __init__(self, data):
