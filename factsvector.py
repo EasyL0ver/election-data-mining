@@ -57,6 +57,9 @@ class Fact:
         self.fact_name = fact_name
         self.fact_value = fact_value
 
+class FactsVector:
+    def __init__(self):
+        self.facts = []
 
 class FactsVectorFactory:
     democrat_candidates = ['Hillary Clinton', 'Bernie Sanders']
@@ -80,8 +83,13 @@ class FactsVectorFactory:
         tdict['HSD410213'] = normalize_per_capita
         tdict['^INC'] = none
         tdict['^PVY'] = none
-
-
+        tdict['BZA010213'] = none
+        tdict['NES010213'] = none
+        tdict['^SBO0'] = normalize_per_10000
+        tdict['^SBO[1-9]'] = none
+        tdict['RTN131207'] = none
+        tdict['BPS030214'] = normalize_per_10000
+        tdict['POP060210'] = none
 
         return tdict
 
