@@ -64,6 +64,11 @@ class FactsVector:
     def numerical(self):
         return list(map(lambda x:x.fact_value, self.facts))
 
+    def labels(self, short = False):
+        if short:
+            return list(map(lambda x: x.fact_name.split(',')[0], self.facts))
+        return list(map(lambda x: x.fact_name, self.facts))
+
 class FactsVectorFactory:
     democrat_candidates = ['Hillary Clinton', 'Bernie Sanders']
     republican_candidates = ['Ben Carson', 'Donald Trump', 'Marco Rubio', 'Ted Cruz', 'John Kasich']
@@ -118,10 +123,10 @@ class FactsVectorFactory:
     def get_votes_vector(self, area):
         vector = []
         for democratCandidate in FactsVectorFactory.democrat_candidates:
-            fact = Fact(democratCandidate + " factor", area.democrat.get_candidate_fraction(democratCandidate))
+            fact = Fact(democratCandidate, area.democrat.get_candidate_fraction(democratCandidate))
             vector.append(fact)
         for republicanCandidate in FactsVectorFactory.republican_candidates:
-            fact = Fact(republicanCandidate + " factor", area.republican.get_candidate_fraction(republicanCandidate))
+            fact = Fact(republicanCandidate, area.republican.get_candidate_fraction(republicanCandidate))
             vector.append(fact)
 
         return vector

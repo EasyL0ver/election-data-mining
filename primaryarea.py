@@ -3,7 +3,6 @@ import re
 from factsvector import *
 
 
-
 class ResultBase:
     def __init__(self):
         self.votes = dict()
@@ -14,6 +13,10 @@ class ResultBase:
             return 0
 
         candidate_votes = self.votes[candidate_name]
+
+        if candidate_votes == 0:
+            return 0
+        
         return float(candidate_votes / self.votes_count)
 
 class Result(ResultBase):
