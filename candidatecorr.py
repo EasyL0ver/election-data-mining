@@ -21,7 +21,7 @@ for i in range(candidates_mat.shape[1]):
     for j in range(candidates_mat.shape[0]):
         c = candidates_mat[j,i]
         val = f"{c:.2f}"
-        ax.text(i, j, val, va='center', ha='center', fontsize=8)
+        ax.text(i, j, val, va='center', ha='center', fontsize=6)
 
 candidate_names = vector_labels[0:7]
 attribute_names = vector_labels[7:]
@@ -30,7 +30,7 @@ ax.set_xticks(np.arange(len(attribute_names)))
 ax.set_yticks(np.arange(len(candidate_names)))
 ax.set_yticklabels(candidate_names)
 ax.set_xticklabels(attribute_names)
-plt.xticks(rotation=90, fontsize=6)
-
+plt.xticks(rotation=90, fontsize=7)
+plt.tight_layout()
 plt.show()
 pass
