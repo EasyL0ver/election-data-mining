@@ -49,5 +49,6 @@ axdem.set_xticklabels(attribute_names, fontdict={'size': 7})
 axrep.set_xticks([])
 axdem.set_xticklabels(attribute_names)
 plt.tight_layout(rect=[0,0,1,1])
+fig.suptitle("Candidate votes to attributes correlation matrix")
 plt.show()
 pass
