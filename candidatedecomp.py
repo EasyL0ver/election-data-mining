@@ -80,6 +80,11 @@ y = [value[1] for value in decomposed]
 axmap.scatter(x, y)
 axmap.set_xlim(-0.7, 1.5)
 axmap.set_ylim(-0.5, 0.8)
+xlabelvariance = pca.explained_variance_ratio_[0] * 100
+axmap.set_xlabel(f'{xlabelvariance:.2f}' + "% explained variance")
+yaxisvariance = pca.explained_variance_ratio_[1] * 100
+axmap.set_ylabel(f'{yaxisvariance:.2f}' + "% explained variance")
+axmap.set_title("Candidate to attribute relation in 2 dimensions")
 axmap.grid()
 #axbar.bar(attribute_names, pca.mean_)
 for i, name in enumerate(republican_candidate_names):
